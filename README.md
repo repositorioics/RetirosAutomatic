@@ -14,7 +14,14 @@ INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden
 
 -- Catalogo Fecha de ejecucion y tiempo de Repeticion del THREAD***
 INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC', NULL, NULL, NULL, '1', 0, '0', 'Catalogo Fecha y Hora Ejecución Thread');
-INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC_datetime', '1', 'CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC', NULL, '0', 1, '0', '10/06/2022 03:00:00');
-INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC_repeticion', '2', 'CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC', NULL, '0', 2, '0', '86400000');
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC_DATETIME', '1', 'CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC', NULL, '0', 1, '0', '10/06/2022 03:00:00');
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC_REPETICION', '2', 'CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC', NULL, '0', 2, '0', '86400000');
 
--- falta file CAT_METADATOS_RETIRO_AUTOMATIC
+-- Catalogo CAT_METADATOS_RETIRO_AUTOMATIC***
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_METADATOS_RETIRO_AUTOMATIC', NULL, NULL, NULL, '1', 0, '0', 'Catalogo METADATA');
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_METADATOS_RETIRO_AUTOMATIC_USER', '1', 'CAT_METADATOS_RETIRO_AUTOMATIC', NULL, '0', 1, '0', 'prueba');
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_METADATOS_RETIRO_AUTOMATIC_EQUIPO', '2', 'CAT_METADATOS_RETIRO_AUTOMATIC', NULL, '0', 2, '0', 'server');
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_METADATOS_RETIRO_AUTOMATIC_SUPERVISOR', '3', 'CAT_METADATOS_RETIRO_AUTOMATIC', NULL, '0', 3, '0', '425');
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_METADATOS_RETIRO_AUTOMATIC_DOCUMENTA', '4', 'CAT_METADATOS_RETIRO_AUTOMATIC', NULL, '0', 4, '0', '403');
+INSERT INTO `mensajes` (`messageKey`, `catKey`, `catRoot`, `en`, `isCat`, `orden`, `catPasive`, `es`) VALUES ('CAT_METADATOS_RETIRO_AUTOMATIC_RELFAM', '5', 'CAT_METADATOS_RETIRO_AUTOMATIC', NULL, '0', 5, '0', '8');
+
