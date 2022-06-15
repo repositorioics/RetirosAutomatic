@@ -43,7 +43,7 @@ public class Principal {
         long timeInMillis = fechaDB.getTime();
 
         //TIEMPO DE REPETICION
-        Integer repetir = Integer.parseInt(objTiempoDb.get(2).getEs());
+        Integer repetir = Integer.parseInt(objTiempoDb.get(1).getEs());
 
         // FORMATO HORA
         String hora_desde_db = new SimpleDateFormat("HH:mm:ss").format(fechaDB);
