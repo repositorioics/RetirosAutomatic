@@ -87,7 +87,7 @@ public class RetirosThread extends Thread {
                                 sb.append(s);
                                 sb.append("  ");
                             }
-                            str = sb.toString();
+                            str = sb.toString().trim();
                         }else{
                             procesos.setEstudio(str);
                             procesos.setEstPart(0);
@@ -156,7 +156,7 @@ public class RetirosThread extends Thread {
                                 sb.append(s);
                                 sb.append("  ");
                             }
-                            str = sb.toString();
+                            str = sb.toString().trim();
                         } else {
                             procesos.setEstudio(str);
                             procesos.setEstPart(0);
@@ -226,7 +226,7 @@ public class RetirosThread extends Thread {
                                 sb.append(s);
                                 sb.append("  ");
                             }
-                            str = sb.toString();
+                            str = sb.toString().trim();
                         } else {
                             procesos.setEstudio(str);
                             procesos.setEstPart(0);
