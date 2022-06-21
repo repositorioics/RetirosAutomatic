@@ -53,7 +53,7 @@ public class RetirosThread extends Thread {
     private void InciarRetiroUO1(){
         logger.info("Iniciando método para retirar del estudio de UO1..!!");
         Session session = HibernateUtil.getSessionFactory().openSession();
-        int cont = 0;
+        int cont = 1;
         try{
 
             List<Mensajes> edad_max_uo1 = participanteDao.getCatalogo("CAT_EDAD_MAX_UO1", session);
@@ -82,12 +82,7 @@ public class RetirosThread extends Thread {
                         }
                         String str="";
                         if (estudios_finales.size()>=1){
-                            StringBuffer sb = new StringBuffer();
-                            for (String s:estudios_finales){
-                                sb.append(s);
-                                sb.append("  ");
-                            }
-                            str = sb.toString().trim();
+                            str = reemplazar(estudios,"UO1","");
                         }else{
                             procesos.setEstudio(str);
                             procesos.setEstPart(0);
@@ -95,7 +90,7 @@ public class RetirosThread extends Thread {
 
                         if (estudiosDelParticipante.length > 1){
                             if (p.getEstudios().contains("UO1")){
-                                procesos.setEstudio(str);
+                                procesos.setEstudio(str.trim());
                             }
                         }
                     }//--> Fin del IF
@@ -103,13 +98,13 @@ public class RetirosThread extends Thread {
                     if (ProcesosActualizado){
                         DocumentacionRetiroData result = getRetiroSaved(p,session,"UO1");
                         if (result!=null)
-                        logger.info("Retiro Guardado con éxito:\n  IdRetiro: "+result.getIdretiro()+"\n Participante: "+ result.getCodigoParticipante()+"\n Total Registros: "+cont++);
+                        logger.info("CODIGO RETIRO: "+result.getIdretiro()+" CODIGO_PARTICIPANTE: "+ result.getCodigoParticipante()+" -> REGISTRO GUARDADO: "+cont++ +" DE "+participantes.size());
                         else
                         logger.error("Hubo un error al Guardar el retiro: "+result.getIdretiro());
                     }
                 }
             }else{
-                logger.info("No se encontraron registro del estudio de UO1");
+                logger.info(" *** NO SE ENCONTRARON REGISTROS DEL ESTUDIO DE UO1 *** ");
             }
         }catch (Exception e){
             logger.error("Ha ocurrido un Error al obtener participantes de UO1: " + e.getMessage());
@@ -122,7 +117,7 @@ public class RetirosThread extends Thread {
     //region todo: METODO RETIRO ESTUDIO DENGUE >=18 AÑOS **
     private void IniciarRetiroDengue(){
         logger.info("Iniciando método para retirar del estudio de Dengue..!!");
-        int cont=0;
+        int cont=1;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             // Obtendo de base de datos la edad Máxima para el estudio de Dengue
@@ -164,7 +159,7 @@ public class RetirosThread extends Thread {
 
                         if (estudiosDelParticipante.length > 1) {
                             if (p.getEstudios().contains("Dengue")) {
-                                procesos.setEstudio(str);
+                                 procesos.setEstudio(str.trim());
                             }
                         }
                     }//--> Fin del IF
@@ -173,13 +168,13 @@ public class RetirosThread extends Thread {
                     if (ProcesosActualizado) {
                         DocumentacionRetiroData result = this.getRetiroSaved(p,session,"Dengue");
                         if (result!=null)
-                            logger.info("Retiro Guardado con éxito:\n  IdRetiro: "+result.getIdretiro()+"\n Participante: "+ result.getCodigoParticipante()+"\n Total Registros: "+cont++);
+                            logger.info("CODIGO RETIRO: "+result.getIdretiro()+" CODIGO_PARTICIPANTE: "+ result.getCodigoParticipante()+" -> REGISTRO GUARDADO: "+cont++ +" DE "+participantes.size());
                         else
                             logger.error("Hubo un error al Guardar el retiro: "+result.getIdretiro());
                     }
                 }// -> fin del FOREACH
             }else{
-                logger.info("No se encontraron registros de Dengue..");
+                logger.info(" *** NO SE ENCONTRARON REGISTROS DE ESTUDIO DE DENGUE *** ");
             }
 
         }catch (Exception ex){
@@ -196,7 +191,7 @@ public class RetirosThread extends Thread {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         try{
-            int cont=0;
+            int cont=1;
             List<Mensajes> edad_max_influenza = participanteDao.getCatalogo("CAT_EDAD_MAX_INFLUENZA", session);
             Integer edad = Integer.parseInt(edad_max_influenza.get(0).getEs());
 
@@ -221,12 +216,7 @@ public class RetirosThread extends Thread {
                         }
                         String str = "";
                         if (estudios_finales.size() >= 1) {
-                            StringBuffer sb = new StringBuffer();
-                            for (String s : estudios_finales) {
-                                sb.append(s);
-                                sb.append("  ");
-                            }
-                            str = sb.toString().trim();
+                            str = reemplazar(estudios,"Influenza","");
                         } else {
                             procesos.setEstudio(str);
                             procesos.setEstPart(0);
@@ -234,18 +224,21 @@ public class RetirosThread extends Thread {
 
                         if (estudioDelParticipante.length > 1) {
                             if (p.getEstudios().contains("Influenza")) {
-                                procesos.setEstudio(str);
+                                procesos.setEstudio(str.trim());
                             }
                         }
                     }
                      boolean ProcesosActualizado = participanteDao.saveOrUpdateProcesos(procesos, session);
                      if (ProcesosActualizado) {
                           DocumentacionRetiroData result = this.getRetiroSaved(p,session,"Influenza");
-                          logger.info("Guardado con éxito!\n CODIGO RETIRO: " + result.getIdretiro() + "\n CODIGO PARTICIPANTE: " + result.getCodigoParticipante() + "\nTotal de Registros:" + cont++);
+                          if (result!=null)
+                          logger.info("CODIGO RETIRO: "+result.getIdretiro()+" CODIGO_PARTICIPANTE: "+ result.getCodigoParticipante()+" -> REGISTRO GUARDADO: "+cont++ +" DE "+participantes.size());
+                          else
+                          logger.error("Hubo un error al Guardar el retiro: "+result.getIdretiro());
                      }
                  }
                 }else{
-                logger.info("No se encontraron registro del estudio de Influenza");
+                logger.info(" *** NO SE ENCONTRARON REGISTROS DEL ESTUDIO INFLUENZA *** ");
             }
         }catch (Exception e){
             logger.error("Ha ocurrido un Error: "+ e.getMessage());
@@ -316,54 +309,27 @@ public class RetirosThread extends Thread {
     }
     //endregion
 
-    //region todo: Obtener MetaData
+    //region todo: Obtener el usuario, identificador_equipo, medico_supervisor, persona_documenta, relacion familiar
     public MetaDatos getMetaDatos(Session session){
         MetaDatos metaDatos = new MetaDatos();
         try {
             logger.info("Iniciando método para obtener MetaDatos..!!");
-            //Session session = HibernateUtil.getSessionFactory().openSession();
-
-
-            //Obtener el usuario
             List<Mensajes>meta = participanteDao.getCatalogo("CAT_METADATOS_RETIRO_AUTOMATIC",session);
-
-
             metaDatos.setNoombreUsuario(meta.get(0).getEs());
             metaDatos.setIdentificador(meta.get(1).getEs());
             Integer medico_supervisor = Integer.parseInt(meta.get(2).getEs());
             metaDatos.setMedicoSupervisor(medico_supervisor);
-
             metaDatos.setPersonalDocumenta(persona_documenta);
-
             metaDatos.setRelacionFamiliar(relacionFamiliar);
             return metaDatos;
-
-
-            /*
-            //Obtener el identificador de equipo
-            List<Mensajes>identificador = participanteDao.getCatalogo("CAT_IDENTIFICADOR_EQUIPO_RETIRO_AUTOMATIC",session);
-            String identificador_equipo = identificador.get(0).getEs();
-
-            //Obtener el Medico supervisor
-            List<Mensajes>medico_sup = participanteDao.getCatalogo("CAT_MEDICO_SUPERVISOR_RETIRO_AUTOMATIC",session);
-
-
-            //Obtener la persona que documenta el retiro
-            List<Mensajes>person = participanteDao.getCatalogo("CAT_PERSONA_DOCUMENTA_RETIRO_AUTOMATIC", session);
-
-
-            //Obtener relacion familiar
-            List<Mensajes>rel_fam = participanteDao.getCatalogo("CAT_RELACION_FAMILIAR_RETIRO_AUTOMATIC",session);
-            */
-
-
-
-
-
         }catch (Exception e){
             logger.error("Error al obtener MetaDatos");
             return metaDatos;
         }
     }
     //endregion
+    
+    public static String reemplazar(String cadena, String busqueda, String reemplazo) {
+        return cadena.replaceAll(busqueda, reemplazo);
+    }
 }
