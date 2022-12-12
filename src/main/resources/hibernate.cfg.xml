@@ -9,8 +9,7 @@
     <property name="connection.pool_size">100</property>
     <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
     <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.current_session_context_class">thread</property>
-      <!-- mapping-->
+    <property name="hibernate.current_session_context_class">ni.com.sts.retirosCSSFV.Principal</property>
       <mapping class="ni.com.sts.retirosCSSFV.dominio.Participantes"/>
       <mapping class="ni.com.sts.retirosCSSFV.dominio.ParticipantesProcesos"/>
       <mapping class="ni.com.sts.retirosCSSFV.dominio.DocumentacionRetiroData"/>

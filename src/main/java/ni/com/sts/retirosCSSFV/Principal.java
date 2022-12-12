@@ -3,15 +3,17 @@ package ni.com.sts.retirosCSSFV;
 import ni.com.sts.retirosCSSFV.Dao.ParticipanteDao;
 import ni.com.sts.retirosCSSFV.conexion.HibernateUtil;
 import ni.com.sts.retirosCSSFV.dominio.Mensajes;
-import ni.com.sts.retirosCSSFV.utils.UtilDate.*;
 import ni.com.sts.retirosCSSFV.thread.RetirosThread;
+import ni.com.sts.retirosCSSFV.utils.UtilDate;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+
+import java.text.DateFormat;
+import java.time.LocalDateTime;
 import java.util.TimerTask;
 import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.text.DateFormat;
 
 
 import java.util.*;
@@ -30,7 +32,7 @@ public class Principal {
 
     public static void main(String[] args) throws ParseException {
 
-        logger.info(" ** Iniciando clase MAIN...!!! **");
+        logger.info(" ** Iniciando clase MAIN... ** ");
         ParticipanteDao dao = new ParticipanteDao();
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Mensajes> objTiempoDb = dao.getCatalogo("CAT_TIEMPO_DESPERTAR_RETIRO_AUTOMATIC",session);
@@ -54,26 +56,28 @@ public class Principal {
         String HORA_DB = parts[0];
         String MINUTE_DB = parts[1];
         String SECOND_DB = parts[2];
+        DateFormat fechaFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         // HORA DE DESPERTAR DESDE LA BD
         Date horaDespertar = new Date(timeInMillis);
         Calendar c = Calendar.getInstance();
         c.setTime(horaDespertar);
-        Calendar hoy = Calendar.getInstance();
 
         // SI LA HORA EN BD ES < A LA HORA ACTUAL ESPERA EL TIEMPO DE EJECUCIÓN
-        boolean horas = Integer.parseInt(HORA_DB) < hoy.get(Calendar.HOUR_OF_DAY);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime DBLocalDateTime = UtilDate.asLocalDateTime(fechaDB);
+        boolean isAfter = now.isAfter(DBLocalDateTime);
 
-        if (horas) {
+        if (isAfter) {
             c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
             c.set(Calendar.HOUR_OF_DAY, Integer.parseInt(HORA_DB));
             c.set(Calendar.MINUTE, Integer.parseInt(MINUTE_DB));
             c.set(Calendar.SECOND, Integer.parseInt(SECOND_DB));
             horaDespertar = c.getTime();
-            System.out.println(Integer.parseInt(HORA_DB)  + " <= "+ hoy.get(Calendar.HOUR_OF_DAY) + " respuesta: "+ horas +" Despertar -> "+ horaDespertar);
+            logger.info("Se ha agregado un día a la fecha. "+ fechaFormat.format(horaDespertar));
         }else{
             horaDespertar=fechaDB;
-            System.out.println(Integer.parseInt(HORA_DB)  + " <= " + hoy.get(Calendar.HOUR_OF_DAY) + " response: "+ horas +" Despertar -> "+ horaDespertar);
+            logger.info("Esperando el tiempo para despertar... "+ fechaFormat.format(horaDespertar));
         }
 
         // TIEMPO DE REPETICIÓN DESDE LA DB
@@ -86,12 +90,4 @@ public class Principal {
             }
         },horaDespertar,tiempoRepeticion);
     }
-
-
-    public static String ConvertMilliSecondsToFormattedDate(String milliSeconds){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(Long.parseLong(milliSeconds));
-        return simpleDateFormat.format(calendar.getTime());
-    }
-
 }// fin class DAY_OF_MONTH

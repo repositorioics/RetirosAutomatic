@@ -24,6 +24,7 @@ public class RetirosThread extends Thread {
 
     private static Logger logger = Logger.getLogger(RetirosThread.class);
     ParticipanteDao participanteDao = new ParticipanteDao();
+    Session session = HibernateUtil.getSessionFactory().openSession();
 
     private static String nombre_usuario;
     private static String identificador;
@@ -31,7 +32,6 @@ public class RetirosThread extends Thread {
     private static Integer persona_documenta;
     private static Integer relacionFamiliar;
 
-    Session session = HibernateUtil.getSessionFactory().openSession();
 
     public RetirosThread(){
         List<Mensajes>meta = participanteDao.getCatalogo("CAT_METADATOS_RETIRO_AUTOMATIC",session);

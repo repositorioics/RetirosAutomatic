@@ -29,6 +29,7 @@ public class ParticipanteDao {
      * @return participanteDtoList lista de participante de Dengue a los cuales se va retirar del estudio.
      * @throws HibernateException
      */
+    @SuppressWarnings("deprecation")
     public List<ParticipanteDto> ObtenerListaParticipantesDengue(Integer edadMax, Date tomorrow) throws HibernateException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<ParticipanteDto>participanteDtoList = null;
@@ -38,7 +39,7 @@ public class ParticipanteDao {
                     " from Participantes p, ParticipantesProcesos pp " +
                     " where p.codigo=pp.codigo and pp.estPart=1 and pp.estudio like '%Dengue%' and floor(fn_edad_meses(p.fechanac, :tomorrow)/12)>=:edadMax")
                     .setParameter("edadMax",edadMax)
-                    .setParameter("tomorrow",tomorrow)
+                    .setParameter("tomorrow",tomorrow).unwrap(org.hibernate.query.Query.class)
                     .setResultTransformer(new AliasToBeanResultTransformer(ParticipanteDto.class)).getResultList();
         }catch (Exception e){
             logger.error("Error al obtener los participantes de Dengue: " + e.getMessage());
@@ -53,6 +54,7 @@ public class ParticipanteDao {
      * @return Lista de participantes de Influenza
      * @throws HibernateException
      */
+    @SuppressWarnings("deprecation")
     public List<ParticipanteDto>ObtenerListaParticipantesInfluenza(Integer edadMaxFlu, Date tomorrow)throws HibernateException{
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<ParticipanteDto> participanteDtoListFlu = null;
@@ -63,7 +65,7 @@ public class ParticipanteDao {
                     " where p.codigo=pp.codigo " +
                     " and pp.estPart=1 and pp.estudio like '%Influenza%' and floor(fn_edad_meses(p.fechanac, :tomorrow)/12)>=:edadMaxFlu ")
                     .setParameter("edadMaxFlu",edadMaxFlu)
-                    .setParameter("tomorrow", tomorrow)
+                    .setParameter("tomorrow", tomorrow).unwrap(org.hibernate.query.Query.class)
                     .setResultTransformer(new AliasToBeanResultTransformer(ParticipanteDto.class)).getResultList();
         }catch (Exception e){
             logger.error("Error al obtener participantes de Influenza: "+ e.getMessage());
@@ -78,6 +80,7 @@ public class ParticipanteDao {
      * @return Lista de participantes del estudio de UO1
      * @throws HibernateException
      */
+    @SuppressWarnings("deprecation")
     public List<ParticipanteDto>ObtenerListaParticipantesUO1(Integer edadMaxUO1, Date tomorrow)throws HibernateException{
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<ParticipanteDto> participanteDtoListUO1 = null;
@@ -88,7 +91,7 @@ public class ParticipanteDao {
                     " where p.codigo=pp.codigo " +
                     " and pp.estPart=1 and pp.estudio like '%UO1%' and floor(fn_edad_meses(p.fechanac, :tomorrow)/12)>=:edadMaxUO1 ")
                     .setParameter("edadMaxUO1",edadMaxUO1)
-                    .setParameter("tomorrow", tomorrow)
+                    .setParameter("tomorrow", tomorrow).unwrap(org.hibernate.query.Query.class)
                     .setResultTransformer(new AliasToBeanResultTransformer(ParticipanteDto.class)).getResultList();
         }catch (Exception e){
             logger.error("Hubo un error al obtener participantes de UO1:" +e.getMessage());
